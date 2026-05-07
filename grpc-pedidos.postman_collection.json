@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "f5e8f8b8-8e8e-4e8e-8e8e-8e8e8e8e8e8e",
+		"name": "gRPC Pedidos API",
+		"description": "Coleção para testar o Order Service (REST) que consome o Inventory Service via gRPC.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Check Stock",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/orders/check-stock/:productId?quantity=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"orders",
+						"check-stock",
+						":productId"
+					],
+					"query": [
+						{
+							"key": "quantity",
+							"value": "2"
+						}
+					],
+					"variable": [
+						{
+							"key": "productId",
+							"value": "PROD-001"
+						}
+					]
+				},
+				"description": "Verifica se um produto específico tem estoque disponível via gRPC Unary."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customer_name\": \"John Doe\",\n    \"items\": [\n        {\n            \"product_id\": \"PROD-001\",\n            \"quantity\": 2\n        },\n        {\n            \"product_id\": \"PROD-002\",\n            \"quantity\": 1\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"orders"
+					]
+				},
+				"description": "Cria um novo pedido. O Order Service valida e reserva todos os itens via gRPC antes de confirmar."
+			},
+			"response": []
+		},
+		{
+			"name": "List Low Stock (Streaming)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/orders/low-stock?threshold=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"orders",
+						"low-stock"
+					],
+					"query": [
+						{
+							"key": "threshold",
+							"value": "5"
+						}
+					]
+				},
+				"description": "Lista produtos com estoque baixo. Consome um stream gRPC do Inventory Service e retorna a lista completa."
+			},
+			"response": []
+		}
+	]
+}

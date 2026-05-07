@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  inventory-service:
+    build:
+      context: ./inventory-service
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    volumes:
+      - ./proto:/proto
+    networks:
+      - grpc-network
+
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./proto:/proto
+    depends_on:
+      - inventory-service
+    environment:
+      - INVENTORY_SERVICE_URL=inventory-service:50051
+    networks:
+      - grpc-network
+
+networks:
+  grpc-network:
+    driver: bridge
