@@ -68,7 +68,13 @@ docker-compose up --build
 
 ## 🧪 Testando os Endpoints
 
-### 1. Verificar Estoque (Unary RPC)
+Você pode testar os endpoints de duas formas:
+
+### 1. Via Postman (Recomendado)
+Importe o arquivo `grpc-pedidos.postman_collection.json` que está na raiz deste repositório para o seu Postman. Ele já contém todas as requisições configuradas.
+
+### 2. Via Terminal (cURL)
+#### A. Verificar Estoque (Unary RPC)
 ```bash
 # Produto disponível
 curl "http://localhost:3000/orders/check-stock/PROD-001?quantity=2"
